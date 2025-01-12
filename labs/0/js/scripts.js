@@ -1,12 +1,11 @@
-const fs = require('fs');
-const filePath = path.join(__dirname, "lang", "messages", "en", "user.js");
+import { messages } from "../lang/messages/en/user.js";
 
 class Game{
     constructor(){
         this.currentButtonValue = 1;
         this.numberOfButtons = 0;
-        this.WINTEXT = "Excellent memory!";
-        this.WRONGORDER = "Wrong order!";
+        this.WINTEXT = messages.winText;
+        this.WRONGORDER = messages.wrongOrder;
         this.buttonManager = new ButtonManager(this);
     }
 
@@ -16,7 +15,7 @@ class Game{
         let allowedValue;
     
         if(enteredValue < 3 || enteredValue > 7){
-            alert("Entered value must be in range 3-7")
+            alert(messages.invalidRange)
             allowedValue = false;
         }else{
             allowedValue = true;
@@ -36,14 +35,12 @@ class Game{
         this.currentButtonValue++;
         if (this.currentButtonValue > this.numberOfButtons) {
             alert(this.WINTEXT);
-            fs.appendFileSync(filePath, `\n${this.WINTEXT}\n`, 'utf8');
         }
     }
 
     handleWrongOrder() {
         this.buttonManager.revealNumbers();
         alert(this.WRONGORDER);
-        fs.appendFileSync(filePath, `\n${this.WRONGORDER}\n`, 'utf8');
     }
 
 }
